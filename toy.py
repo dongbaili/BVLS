@@ -209,6 +209,3 @@ def test2():
 if __name__ == '__main__':
     np.random.seed(10)
     test2()
-    
-    
-    

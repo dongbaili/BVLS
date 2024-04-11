@@ -91,3 +91,20 @@ $$ weight = \frac{(variance^2)}{np.sum(variance^2)}$$
 <img src="images/toy_weight_Lasso.png">
 
 
+# Real World CV datasets:
+
+## Workflow designed to reduce Time complexity
+1. Use two stage method, first simply train a ERM model and save its featurizer
+2. Load the featurizer and calculate the embedding for all pictures and save
+3. Load the embedding vectors and do bootstrap (100 times)
+4. Train the linear classifier with the selected data
+5. Repeated step 3 and 4, the cost of this is just the same to train 100 linear classifier
+6. Aggregate all the coefficient from 100 classifiers and calculate their variance
+7. use the square of variance as weight to train a weighted lasso classifier on all pictures
+
+#### The main idea here is that with two-stage method and pre-embedding, the cost of bootstrap collecting and training is not significant compared to the first stage (train the featurizer and classifier at the same time)
+
+## Problem:
+1. how to deal with non-linear classifier?
+2. the meaning of embeddings are unclear, may be not as explainable as this toy setting. (Which features or feature combinations stand for a certain spurious attribute is usually unknow)
+
